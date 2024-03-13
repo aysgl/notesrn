@@ -1,10 +1,12 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {COLORS} from '../theme/color';
-import {Trash} from 'iconsax-react-native';
+import {Edit, Trash} from 'iconsax-react-native';
 import {SCREEN} from '../utils/route';
+import MyContext from '../context';
 
 export default function Card({data, url}) {
+  const {deleteNote} = useContext(MyContext);
   return (
     <TouchableOpacity onPress={() => url.navigate(SCREEN.DETAIL, {data: data})}>
       <View style={styles.card}>
@@ -12,7 +14,21 @@ export default function Card({data, url}) {
         <Text style={styles.description}>{data.description.slice(0, 120)}</Text>
         <View style={styles.row}>
           <Text style={styles.date}>{data.date}</Text>
-          <Trash size="20" color={COLORS.PRIMARY} />
+          <View style={styles.row}>
+            <TouchableOpacity
+              onPress={() =>
+                url.navigate(SCREEN.ADDNOTE, {note: data, type: 'update'})
+              }>
+              <Edit
+                size="20"
+                color={COLORS.PRIMARY}
+                style={{marginRight: 10}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteNote(data.id)}>
+              <Trash size="20" color={COLORS.PRIMARY} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </TouchableOpacity>

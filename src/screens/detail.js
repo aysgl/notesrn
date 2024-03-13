@@ -1,31 +1,34 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../theme/color';
-import {Trash} from 'iconsax-react-native';
 
 export default function Detail({route}) {
-  const {data} = route.params;
+  const {data} = route?.params;
   const {title, description, date} = data;
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
-      <View style={styles.row}>
-        <Text style={styles.date}>{date}</Text>
-        <Trash size="20" color={COLORS.PRIMARY} />
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.description]}>{description}</Text>
+        <View style={styles.row}>
+          <Text style={styles.date}>{date}</Text>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
   card: {
     backgroundColor: COLORS.WHITE,
     marginBottom: 0,
     borderRadius: 10,
     padding: 20,
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
     marginVertical: 10,
     shadowColor: 'rgba(0, 0, 0, 0.3)',
     shadowOffset: {
